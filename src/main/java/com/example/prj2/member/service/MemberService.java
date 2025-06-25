@@ -41,4 +41,9 @@ public class MemberService {
             throw new DuplicateKeyException(data.getId() + "는 이미 존재하는 아이디입니다.");
         }
     }
+
+    public List<Member> list() {
+        List<Member> all = memberRepository.findAll();
+        return all;
+    }
 }

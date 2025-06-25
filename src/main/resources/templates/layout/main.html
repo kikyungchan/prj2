@@ -61,6 +61,12 @@
                             회원가입
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/member/list}"
+                           th:classappend="${current == 'memberlist' ? 'active' : ''}">
+                            회원목록
+                        </a>
+                    </li>
                 </ul>
                 <label class="mt-3">
                     검색
