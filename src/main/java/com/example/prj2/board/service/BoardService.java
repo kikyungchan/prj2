@@ -1,13 +1,15 @@
 package com.example.prj2.board.service;
 
 import com.example.prj2.board.dto.BoardForm;
+import com.example.prj2.board.dto.BoardListInfo;
 import com.example.prj2.board.entity.Board;
 import com.example.prj2.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,9 +30,10 @@ public class BoardService {
 
     }
 
-    public List<Board> list() {
-        List<Board> list = boardRepository.findAll();
-        boardRepository.findAllBy();
-        return list;
+    public List<BoardListInfo> list(Integer page) {
+//        List<Board> list = boardRepository.findAll();
+        List<BoardListInfo> boardList = boardRepository
+                .findAllBy(PageRequest.of(page - 1, 10, Sort.by("id").descending()));
+        return boardList;
     }
 }
