@@ -1,5 +1,6 @@
 package com.example.prj2.board.service;
 
+import com.example.prj2.board.dto.BoardDto;
 import com.example.prj2.board.dto.BoardForm;
 import com.example.prj2.board.dto.BoardListInfo;
 import com.example.prj2.board.entity.Board;
@@ -52,5 +53,16 @@ public class BoardService {
                 "currentPage", page);
 
         return result;
+    }
+
+    public BoardDto get(Integer id) {
+        Board board = boardRepository.findById(id).get();
+        BoardDto dto = new BoardDto();
+        dto.setId(board.getId());
+        dto.setTitle(board.getTitle());
+        dto.setContent(board.getContent());
+        dto.setWriter(board.getWriter());
+        dto.setCreatedAt(board.getCreatedAt());
+        return dto;
     }
 }
