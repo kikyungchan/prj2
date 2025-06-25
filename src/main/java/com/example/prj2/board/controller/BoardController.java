@@ -1,8 +1,6 @@
 package com.example.prj2.board.controller;
 
 import com.example.prj2.board.dto.BoardForm;
-import com.example.prj2.board.dto.BoardListInfo;
-import com.example.prj2.board.entity.Board;
 import com.example.prj2.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,6 +41,13 @@ public class BoardController {
         var dto = boardService.get(id);
         model.addAttribute("board", dto);
         return "board/view";
+    }
+
+    @PostMapping("remove")
+    public String remove(Integer id) {
+        boardService.remove(id);
+
+        return "redirect:/board/list";
     }
 }
 
