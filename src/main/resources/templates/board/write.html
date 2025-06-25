@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout/main::commonHead}">
+<head th:replace="~{layout/main::commonHead('글쓰기')}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<h2>게시물 작성</h2>
-<form th:action="@{/board/write}">
-    <div>
-        <label for="titleInput">제목</label>
-        <input type="text" name="title" id="titleInput">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+            
+            <h2 class="mb-3">게시물 작성</h2>
+            <form th:action="@{/board/write}">
+                <div class="mb-3">
+                    <label for="titleInput" class="form-label">제목</label>
+                    <input type="text" name="title" id="titleInput" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="contentTextarea" class="form-label">본문</label>
+                    <textarea name="content" id="contentTextarea" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="writerInput" class="form-label">작성자</label>
+                    <input type="text" name="writer" id="writerInput" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-outline-primary">저장</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="contentTextarea">본문</label>
-        <textarea name="content" id="contentTextarea"></textarea>
-    </div>
-    <div>
-        <label for="writerInput">작성자</label>
-        <input type="text" name="writer" id="writerInput">
-    </div>
-    <div>
-        <button>저장</button>
-    </div>
-</form>
+</div>
 <th:block th:replace="~{layout/main::commonScript}"/>
 </body>
 </html>
