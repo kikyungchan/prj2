@@ -27,16 +27,17 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public String writeBoard(BoardForm data) {
+    public String writePost(BoardForm data) {
         boardService.add(data);
 
-        return "redirect:/board/write";
+        return "redirect:/board/list";
     }
 
     @GetMapping("list")
     public String list(@RequestParam(defaultValue = "1") Integer page, Model model) {
-        List<BoardListInfo> result = boardService.list(page);
-        model.addAttribute("boardList", result);
+        var result = boardService.list(page);
+        model.addAllAttributes(result);
         return "board/list";
     }
 }
+

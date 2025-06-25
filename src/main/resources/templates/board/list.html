@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .active {
+            background-color: yellow;
+        }
+    </style>
 </head>
 <body>
+<h2>게시물 목록</h2>
 <!--table>thead>tr>th*4^^tbody>tr>td*4-->
 <table>
     <thead>
@@ -12,7 +22,7 @@
         <th>#</th>
         <th>제목</th>
         <th>작성자</th>
-        <th>작성일시</th>
+        <th>작성일자</th>
     </tr>
     </thead>
     <tbody>
@@ -24,5 +34,20 @@
     </tr>
     </tbody>
 </table>
+<div>
+    <span th:if="${(leftPageNumber - 9) > 0}">
+        <a th:href="@{/board/list(page=${leftPageNumber - 9})}">이전</a>
+        |
+    </span>
+    <span th:each="pageNumber :${#numbers.sequence(leftPageNumber, rightPageNumber)}">
+        <a th:classappend="${(currentPage == pageNumber) ? 'active' : ''}" th:href="@{/board/list(page=${pageNumber})}"
+           th:text="${pageNumber}"></a>
+        |
+    </span>
+    <span th:if="${(rightPageNumber+1) <= totalPages}">
+        <a th:href="@{/board/list(page=${rightPageNumber+1})}">다음</a>
+        |
+    </span>
+</div>
 </body>
 </html>
