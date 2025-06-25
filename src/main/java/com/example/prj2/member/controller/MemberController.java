@@ -99,3 +99,4 @@ public class MemberController {
         return "redirect:/member/edit";
     }
 }
+//TODO:session로그인부터
