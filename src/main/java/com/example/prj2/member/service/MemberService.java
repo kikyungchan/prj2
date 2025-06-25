@@ -1,5 +1,6 @@
 package com.example.prj2.member.service;
 
+import com.example.prj2.member.dto.MemberDto;
 import com.example.prj2.member.dto.MemberForm;
 import com.example.prj2.member.entity.Member;
 import com.example.prj2.member.repository.MemberRepository;
@@ -45,5 +46,16 @@ public class MemberService {
     public List<Member> list() {
         List<Member> all = memberRepository.findAll();
         return all;
+    }
+
+    public MemberDto get(String id) {
+        Member member = memberRepository.findById(id).get();
+        MemberDto dto = new MemberDto();
+        dto.setId(member.getId());
+        dto.setNickName(member.getNickName());
+        dto.setInfo(member.getInfo());
+        dto.setCreatedAt(member.getCreatedAt());
+        return dto;
+
     }
 }
