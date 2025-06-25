@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 2px solid olive;
+            border-radius: 30px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 1rem;
+            background: none;
+        }
+
+        .search-icons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-icons img {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 500px) {
+            .search-icons img {
+                width: 16px;
+                height: 16px;
+            }
+
+            .search-container {
+                padding: 8px 12px;
+            }
+
+            .search-container input {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="searchBox" class="search-container">
+    <input type="text" placeholder="검색어를 입력하세요">
+    <div class="search-icons">
+        <img src="https://img.icons8.com/ios-glyphs/30/keyboard.png" alt="keyboard">
+        <img src="https://img.icons8.com/ios-glyphs/30/expand-arrow.png" alt="arrow">
+        <img src="https://img.icons8.com/ios-glyphs/30/search--v1.png" alt="search">
+    </div>
+</div>
+
+</body>
+</html>

@@ -3,12 +3,14 @@
 <head th:replace="~{layout/main::commonHead('글쓰기')}">
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
+<nav th:replace="~{layout/main::pageNavbar}"></nav>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-lg-6">
-            
+
             <h2 class="mb-3">게시물 작성</h2>
             <form th:action="@{/board/write}">
                 <div class="mb-3">
@@ -17,7 +19,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="contentTextarea" class="form-label">본문</label>
-                    <textarea name="content" id="contentTextarea" class="form-control"></textarea>
+                    <textarea name="content" rows="10" id="contentTextarea" class="form-control"></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="writerInput" class="form-label">작성자</label>

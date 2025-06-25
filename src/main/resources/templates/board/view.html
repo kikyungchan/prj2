@@ -5,25 +5,35 @@
     <title>Title</title>
 </head>
 <body>
-<h2>
-    <span th:text="${board.id}"></span>
-    게시물 보기
-</h2>
-<div>
-    <label for="inputTitle">제목</label>
-    <input type="text" id="inputTitle" th:value="${board.title}" readonly>
-</div>
-<div>
-    <label for="textareaContent">본문</label>
-    <textarea id="textareaContent" th:text="${board.content}" readonly></textarea>
-</div>
-<div>
-    <label for="inputWriter">작성자</label>
-    <input type="text" id="inputWriter" th:value="${board.writer}" readonly>
-</div>
-<div>
-    <label for="inputCreated">작성일시</label>
-    <input type="datetime-local" id="inputCreated" th:value="${board.createdAt}" readonly>
+<nav th:replace="~{layout/main::pageNavbar}"></nav>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+
+            <h2 class="mb-3">
+                <span th:text="${board.id}"></span>
+                번게시물
+            </h2>
+            <div class="mb-3">
+                <label for="inputTitle" class="form-label">제목</label>
+                <input type="text" id="inputTitle" th:value="${board.title}" readonly class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="textareaContent" class="form-label">본문</label>
+                <textarea id="textareaContent" rows="10" th:text="${board.content}" readonly
+                          class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="inputWriter" class="form-label">작성자</label>
+                <input type="text" id="inputWriter" th:value="${board.writer}" readonly class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="inputCreated" class="form-label">작성일시</label>
+                <input type="datetime-local" id="inputCreated" th:value="${board.createdAt}" readonly
+                       class="form-control">
+            </div>
+        </div>
+    </div>
 </div>
 <th:block th:replace="~{layout/main::commonScript}"/>
 </body>
