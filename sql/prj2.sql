@@ -18,5 +18,16 @@ SELECT title, content, writer
 FROM board;
 
 SELECT COUNT(*)
-FROM board
+FROM board;
+
+#회원 테이블
+CREATE TABLE member
+(
+    id         VARCHAR(25)  NOT NULL,
+    password   VARCHAR(25)  NOT NULL,
+    nick_name  VARCHAR(25)  NOT NULL,
+    info       VARCHAR(500) NULL,
+    created_at datetime     NOT NULL DEFAULT NOW(),
+    CONSTRAINT pk_member PRIMARY KEY (id)
+);
 
