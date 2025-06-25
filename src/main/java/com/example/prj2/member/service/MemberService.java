@@ -76,4 +76,17 @@ public class MemberService {
             return false;
         }
     }
+
+    public boolean updatePassword(String id, String oldPassword, String newPassword) {
+        Member db = memberRepository.findById(id).get();
+        String dbPw = db.getPassword();
+        if (dbPw.equals(oldPassword)) {
+            db.setPassword(newPassword);
+            memberRepository.save(db);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -77,6 +77,25 @@ public class MemberController {
                             "message", "잘못 입력하셨습니다."));
             rttr.addAttribute("id", data.getId());
         }
+        return "redirect:/member/list";
+    }
+
+    @PostMapping("changePw")
+    public String changePw(String id,
+                           String oldPassword,
+                           String newPassword,
+                           RedirectAttributes rttr) {
+        boolean result = memberService.updatePassword(id, oldPassword, newPassword);
+        if (result) {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "success",
+                            "message", "암호가 변경되었습니다."));
+        } else {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "danger",
+                            "message", "암호가 일치하지 않습니다."));
+        }
+        rttr.addAttribute("id", id);
         return "redirect:/member/edit";
     }
 }
