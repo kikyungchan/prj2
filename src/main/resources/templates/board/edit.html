@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/main::commonHead(|${board.id}번 수정|)}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="~{layout/main::pageNavbar(_)}"></nav>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-6">
+            <h2 class="mb-3">
+        <span th:text="${board.id}">
+          243
+        </span>
+                번 게시물 수정
+            </h2>
+            <form id="editForm" th:action="@{/board/edit}" method="post">
+                <input type="hidden" name="id" th:value="${board.id}">
+
+                <div class="mb-4">
+                    <label for="titleInput" class="form-label">제목</label>
+                    <input th:value="${board.title}" type="text" name="title" id="titleInput" class="form-control"
+                           required>
+                </div>
+                <div class="mb-4">
+                    <label for="contentTextarea" class="form-label">본문</label>
+                    <textarea th:text="${board.content}" rows="10" type="text" name="content" id="contentTextarea"
+                              class="form-control" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="writerInput">작성자</label>
+                    <input th:value="${board.writer}" name="writer" class="form-control" type="text" id="writerInput"
+                           required>
+                </div>
+
+                <div class="mb-4">
+                    <button type="button" class="btn btn-outline-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editModal">저장
+                    </button>
+                    <button class="btn btn-outline-secondary">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">
+                    수정 확인
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" th:text="${board.id} + '번 게시물을 수정하시겠습니까?' ">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" form="editForm" class="btn btn-outline-primary">수정</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{layout/main::commonScript}"/>
+</body>
+</html>
