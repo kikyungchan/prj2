@@ -33,9 +33,9 @@
                        class="form-control">
             </div>
             <div>
-                <button class="btn btn-outline-danger" form="removeForm"
+                <button class="btn btn-outline-danger"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">삭제
+                        data-bs-target="#removeModal">삭제
                 </button>
                 <button class="btn btn-outline-primary">수정</button>
             </div>
@@ -58,8 +58,8 @@
                 </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                삭제 하시겠습니까?
+            <div class="modal-body" th:text="${board.id} + '번 게시물을 삭제하시겠습니까?' ">
+
             </div>
             <div class="modal-footer">
                 <button type="submit" form="removeForm" class="btn btn-danger">삭제</button>
