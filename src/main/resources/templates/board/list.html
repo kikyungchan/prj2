@@ -4,18 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <style>
-        a {
-            text-decoration: none;
-        }
-
-        .active {
-            background-color: yellow;
-        }
-    </style>
 </head>
 <body>
-<nav th:replace="~{layout/main::pageNavbar}"></nav>
+<nav th:replace="~{layout/main::pageNavbar('list')}"></nav>
 
 <div class="container">
     <div class="row">
@@ -45,7 +36,7 @@
                 </table>
             </div>
             <nav>
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item" th:if="${(leftPageNumber - 10) > 0}">
                         <a class="page-link" th:href="@{/board/list(page=${leftPageNumber - 10})}">
                             <span>&laquo;</span>
