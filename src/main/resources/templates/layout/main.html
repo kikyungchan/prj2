@@ -55,6 +55,12 @@
                             글쓰기
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/member/signup}"
+                           th:classappend="${current == 'signup' ? 'active' : ''}">
+                            회원가입
+                        </a>
+                    </li>
                 </ul>
                 <label class="mt-3">
                     검색
