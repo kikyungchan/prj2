@@ -55,4 +55,28 @@ public class MemberController {
 
         return "member/view";
     }
+
+    @GetMapping("edit")
+    public String edit(Model model, String id) {
+        model.addAttribute("member", memberService.get(id));
+        return "member/edit";
+    }
+
+    @PostMapping("edit")
+    public String edit(MemberForm data, RedirectAttributes rttr) {
+
+        boolean update = memberService.update(data);
+        if (update) {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "success",
+                            "message", "회원정보가 변경되었습니다."));
+            rttr.addAttribute("id", data.getId());
+        } else {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "warning",
+                            "message", "잘못 입력하셨습니다."));
+            rttr.addAttribute("id", data.getId());
+        }
+        return "redirect:/member/edit";
+    }
 }
