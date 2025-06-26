@@ -61,7 +61,7 @@
                             목록
                         </a>
                     </li>
-                    <li class="nav-item" th:if="${session.loggedInUser != null}">
+                    <li class="nav-item">
                         <a class="nav-link" th:href="@{/board/write}"
                            th:classappend="${current == 'write' ? 'active' : ''}">
                             글쓰기
