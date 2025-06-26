@@ -23,9 +23,7 @@ public class BoardController {
     public String writeForm(HttpSession session, RedirectAttributes rttr) {
         Object user = session.getAttribute("loggedInUser");
         if (user == null) {
-            rttr.addFlashAttribute("alert",
-                    Map.of("code", "warning",
-                            "message", "로그인 후 글을 작성 해주세요."));
+            rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", "로그인 후 글을 작성 해주세요."));
             return "redirect:/member/login";
         } else {
 
@@ -36,14 +34,11 @@ public class BoardController {
     }
 
     @PostMapping("write")
-    public String writePost(BoardForm data, RedirectAttributes rttr,
-                            @SessionAttribute(name = "loggedInUser", required = false) MemberDto user) {
+    public String writePost(BoardForm data, RedirectAttributes rttr, @SessionAttribute(name = "loggedInUser", required = false) MemberDto user) {
 
         if (user != null) {
             boardService.add(data, user);
-            rttr.addFlashAttribute("alert",
-                    Map.of("code", "primary",
-                            "message", "새 게시물이 등록되었습니다."));
+            rttr.addFlashAttribute("alert", Map.of("code", "primary", "message", "새 게시물이 등록되었습니다."));
 
 
             return "redirect:/board/list";
@@ -68,13 +63,18 @@ public class BoardController {
     }
 
     @PostMapping("remove")
-    public String remove(Integer id, RedirectAttributes rttr) {
+    public String remove(Integer id, @SessionAttribute(value = "loggedInUser", required = false) MemberDto user, RedirectAttributes rttr) {
 
-        boardService.remove(id);
-        rttr.addFlashAttribute("alert",
-                Map.of("code", "danger",
-                        "message", id + "번 게시글이 삭제되었습니다"));
-        return "redirect:/board/list";
+        boolean remove = boardService.remove(id, user);
+        if (remove) {
+
+            rttr.addFlashAttribute("alert", Map.of("code", "danger", "message", id + "번 게시글이 삭제되었습니다"));
+            return "redirect:/board/list";
+        } else {
+            rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", id + "번 게시물이 삭제되지 않았어"));
+            rttr.addAttribute("id", id);
+            return "redirect:/board/view";
+        }
     }
 
     @GetMapping("edit")
@@ -87,9 +87,7 @@ public class BoardController {
     @PostMapping("edit")
     public String editPost(BoardForm data, RedirectAttributes rttr) {
         boardService.update(data);
-        rttr.addFlashAttribute("alert",
-                Map.of("code", "success",
-                        "message", data.getId() + "번 게시물이 수정되었습니다."));
+        rttr.addFlashAttribute("alert", Map.of("code", "success", "message", data.getId() + "번 게시물이 수정되었습니다."));
         rttr.addAttribute("id", data.getId());
         return "redirect:/board/list";
     }

@@ -116,6 +116,7 @@ public class MemberController {
 
         } else {
             rttr.addFlashAttribute("alert", Map.of("code", "danger", "message", "아이디/패스워드가 일치하지 않습니다."));
+            rttr.addFlashAttribute("id", id);
             return "redirect:/member/login";
         }
     }
