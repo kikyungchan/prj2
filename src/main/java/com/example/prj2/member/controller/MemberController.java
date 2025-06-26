@@ -2,6 +2,7 @@ package com.example.prj2.member.controller;
 
 import com.example.prj2.member.dto.MemberForm;
 import com.example.prj2.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
@@ -114,6 +115,25 @@ public class MemberController {
                             "message", "암호가 일치하지 않습니다."));
             rttr.addAttribute("id", id);
             return "redirect:/member/view";
+        }
+    }
+
+    @GetMapping("login")
+    public String loginForm() {
+
+        return "member/login";
+    }
+
+    @PostMapping("login")
+    public String login(String id, String password, HttpSession httpSession) {
+
+        boolean login = memberService.login(id, password, httpSession);
+
+        if (login) {
+            return "redirect:/board/list";
+
+        } else {
+            return "redirect:/member/login";
         }
     }
 }
