@@ -9,6 +9,7 @@ public class MemberDto {
     private String id;
     private String nickName;
     private String info;
+    private String writer;
     private LocalDateTime createdAt;
 
 

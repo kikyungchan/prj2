@@ -1,5 +1,6 @@
 package com.example.prj2.board.dto;
 
+import com.example.prj2.member.dto.MemberDto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,6 @@ public class BoardDto {
     Integer id;
     String title;
     String content;
-    String writer;
+    MemberDto writer;
     LocalDateTime createdAt;
 }
