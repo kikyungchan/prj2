@@ -27,7 +27,7 @@ public class BoardService {
         Board board = new Board();
         board.setTitle(formData.getTitle());
         board.setContent(formData.getContent());
-        board.setWriter(user.getId());
+        board.setWriter(user.getWriter());
 
         boardRepository.save(board);
 
