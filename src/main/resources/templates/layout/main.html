@@ -25,6 +25,7 @@
 <!--나브바-->
 <nav th:fragment="pageNavbar(current)" class="navbar fixed-top">
     <div style="position: fixed; top: 10px;" th:if="${alert != null}" class="container mb-4">
+
         <div class="row">
             <div class="col">
                 <div th:text="${alert.message}"
@@ -32,8 +33,10 @@
                      class="alert"
                      role="alert">
                     A simple primary alert—check it out!
+
                 </div>
             </div>
+
         </div>
     </div>
     <div class="container">
@@ -82,24 +85,35 @@
                             회원가입
                         </a>
                     </li>
-                    <li class="nav-item" th:if="${session.loggedInUser != null}">
+                    <li class="nav-item"> <!-- th:if="${session.loggedInUser != null}"-->
                         <a class="nav-link" th:href="@{/member/list}"
                            th:classappend="${current == 'memberlist' ? 'active' : ''}">
                             회원목록
                         </a>
                     </li>
-                </ul>
-                <label class="mt-3">
-                    검색
-                    <form class="d-flex mt-3" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    <li class="nav-item" th:if="${session.loggedInUser == null}">
+                        <a class="nav-link" th:href="@{/member/view}"
+                           th:classappend="${current == 'signup' ? 'active' : ''}">
+                            내정보
+                        </a>
+                    </li>
+                    <form style="z-index: 1050" th:action="@{/board/list}" class="d-flex mt-30">
+                        <input type="text"
+                               class="form-control me-2"
+                               name="keyword"
+                               th:value="${(param.keyword == null || param.keyword[0].isBlank()) ? '' : param.keyword[0]}">
+                        <button class="btn btn-outline-success">
+                            <span style="word-break: keep-all">
+                                검색
+                            </span>
+                        </button>
                     </form>
-                </label>
+                </ul>
             </div>
         </div>
     </div>
 </nav>
+
 
 <th:block th:fragment="commonScript">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

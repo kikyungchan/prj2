@@ -42,6 +42,7 @@ DROP TABLE member;
 # 게시판
 # 안녕
 
+
 UPDATE board
 SET writer ='게시판'
 WHERE id % 2 = 1;
@@ -53,3 +54,6 @@ WHERE id % 2 = 0;
 # 외래키 제약 사항 추가
 ALTER TABLE board
     ADD FOREIGN KEY (writer) REFERENCES member (id);
+
+
+

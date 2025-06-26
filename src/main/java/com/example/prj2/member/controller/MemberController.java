@@ -34,7 +34,7 @@ public class MemberController {
         try {
             memberService.add(data);
             rttr.addFlashAttribute("alert", Map.of("code", "success", "message", "회원 가입되었습니다"));
-            return "redirect:/member/list";
+            return "redirect:/member/login";
         } catch (DuplicateKeyException e) {
             rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", e.getMessage()));
             rttr.addFlashAttribute("member", data);
@@ -110,11 +110,12 @@ public class MemberController {
     public String remove(MemberForm data,
                          RedirectAttributes rttr,
                          @SessionAttribute(value = "loggedInUser", required = false)
-                         MemberDto user) {
+                         MemberDto user, HttpSession httpSession) {
 
         boolean remove = memberService.remove(data, user);
         if (remove) {
             rttr.addFlashAttribute("alert", Map.of("code", "success", "message", "회원 탈퇴 되었습니다."));
+            httpSession.invalidate();
             return "redirect:/board/list";
         } else {
             rttr.addFlashAttribute("alert", Map.of("code", "danger", "message", "암호가 일치하지 않습니다."));
