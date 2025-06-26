@@ -61,8 +61,8 @@ public class BoardService {
                 "rightPageNumber", rightPageNumber,
                 "leftPageNumber", leftPageNumber,
                 "currentPage", page);
-
         return result;
+
     }
 
     public BoardDto get(Integer id) {
