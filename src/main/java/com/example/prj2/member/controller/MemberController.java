@@ -33,7 +33,7 @@ public class MemberController {
             rttr.addFlashAttribute("alert",
                     Map.of("code", "success",
                             "message", "회원 가입되었습니다"));
-            return "redirect:/board/list";
+            return "redirect:/member/list";
         } catch (DuplicateKeyException e) {
             rttr.addFlashAttribute("alert",
                     Map.of("code", "warning",
@@ -98,5 +98,25 @@ public class MemberController {
         rttr.addAttribute("id", id);
         return "redirect:/member/edit";
     }
+
+    @PostMapping("remove")
+    public String remove(String id, String password, RedirectAttributes rttr) {
+
+        boolean remove = memberService.remove(id, password);
+        if (remove) {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "success",
+                            "message", "회원 탈퇴 되었습니다."));
+            return "redirect:/member/list";
+        } else {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "danger",
+                            "message", "암호가 일치하지 않습니다."));
+            rttr.addAttribute("id", id);
+            return "redirect:/member/view";
+        }
+    }
 }
-//TODO:session받아서로그인하기
+
+
+

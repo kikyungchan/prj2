@@ -35,7 +35,7 @@ public class MemberService {
                 //저장
                 memberRepository.save(member);
             } else {
-                throw new DuplicateKeyException(data.getId() + "는 이미 존재하는 닉네임입니다.");
+                throw new DuplicateKeyException(data.getNickName() + "는 이미 존재하는 닉네임입니다.");
             }
 
         } else {
@@ -84,6 +84,17 @@ public class MemberService {
             db.setPassword(newPassword);
             memberRepository.save(db);
 
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean remove(String id, String password) {
+        Member member = memberRepository.findById(id).get();
+        String dbPw = member.getPassword();
+        if (dbPw.equals(password)) {
+            memberRepository.deleteById(id);
             return true;
         } else {
             return false;
