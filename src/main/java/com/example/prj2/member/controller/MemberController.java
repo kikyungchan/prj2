@@ -64,9 +64,19 @@ public class MemberController {
     }
 
     @GetMapping("edit")
-    public String edit(Model model, String id) {
-        model.addAttribute("member", memberService.get(id));
-        return "member/edit";
+    public String edit(Model model, String id,
+                       @SessionAttribute(value = "loggedInUser", required = false)
+                       MemberDto user, RedirectAttributes rttr) {
+        MemberDto member = memberService.get(id);
+        if (user != null) {
+            if (member.getId().equals(user.getId())) {
+                model.addAttribute("member", member);
+                return "member/edit";
+            }
+        }
+        rttr.addFlashAttribute("alert",
+                Map.of("code", "danger", "message", "권한이없습니다"));
+        return "redirect:/board/list";
     }
 
     @PostMapping("edit")
@@ -76,7 +86,7 @@ public class MemberController {
         if (update) {
             rttr.addFlashAttribute("alert", Map.of("code", "success", "message", "회원정보가 변경되었습니다."));
             rttr.addAttribute("id", data.getId());
-            return "redirect:/member/list";
+            return "redirect:/member/edit";
         } else {
             rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", "비밀번호를 다시 입력하세요."));
             rttr.addAttribute("id", data.getId());
@@ -97,15 +107,18 @@ public class MemberController {
     }
 
     @PostMapping("remove")
-    public String remove(String id, String password, RedirectAttributes rttr) {
+    public String remove(MemberForm data,
+                         RedirectAttributes rttr,
+                         @SessionAttribute(value = "loggedInUser", required = false)
+                         MemberDto user) {
 
-        boolean remove = memberService.remove(id, password);
+        boolean remove = memberService.remove(data, user);
         if (remove) {
             rttr.addFlashAttribute("alert", Map.of("code", "success", "message", "회원 탈퇴 되었습니다."));
-            return "redirect:/member/list";
+            return "redirect:/board/list";
         } else {
             rttr.addFlashAttribute("alert", Map.of("code", "danger", "message", "암호가 일치하지 않습니다."));
-            rttr.addAttribute("id", id);
+            rttr.addAttribute("id", data.getId());
             return "redirect:/member/view";
         }
     }

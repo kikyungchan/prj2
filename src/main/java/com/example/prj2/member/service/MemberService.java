@@ -1,5 +1,6 @@
 package com.example.prj2.member.service;
 
+import com.example.prj2.board.repository.BoardRepository;
 import com.example.prj2.member.dto.MemberDto;
 import com.example.prj2.member.dto.MemberForm;
 import com.example.prj2.member.entity.Member;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
 
     public void add(MemberForm data) {
         Optional<Member> db = memberRepository.findById(data.getId());
@@ -91,15 +93,23 @@ public class MemberService {
         }
     }
 
-    public boolean remove(String id, String password) {
-        Member member = memberRepository.findById(id).get();
-        String dbPw = member.getPassword();
-        if (dbPw.equals(password)) {
-            memberRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
+    public boolean remove(MemberForm data, MemberDto user) {
+        if (user != null) {
+
+            Member member = memberRepository.findById(data.getId()).get();
+            if (member.getId().equals(user.getId())) {
+                String dbPw = member.getPassword();
+                String formPw = data.getPassword();
+                if (dbPw.equals(formPw)) {
+                    //작성한 글 삭제
+                    boardRepository.deleteByWriter(member);
+                    //회원 정보 삭제
+                    memberRepository.delete(member);
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     public boolean login(String id, String password, HttpSession httpSession) {
