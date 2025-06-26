@@ -1,5 +1,6 @@
 package com.example.prj2.member.controller;
 
+import com.example.prj2.member.dto.MemberDto;
 import com.example.prj2.member.dto.MemberForm;
 import com.example.prj2.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
@@ -47,10 +49,18 @@ public class MemberController {
     }
 
     @GetMapping("view")
-    public String view(Model model, String id) {
-        model.addAttribute("member", memberService.get(id));
-
-        return "member/view";
+    public String view(Model model, String id,
+                       @SessionAttribute(value = "loggedInUser", required = false)
+                       MemberDto user, RedirectAttributes rttr) {
+        MemberDto member = memberService.get(id);
+        if (user != null) {
+            if (member.getId().equals(user.getId())) {
+                model.addAttribute("member", member);
+                return "member/view";
+            }
+        }
+        rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", "권한이없다"));
+        return "redirect:/board/list";
     }
 
     @GetMapping("edit")
@@ -66,11 +76,12 @@ public class MemberController {
         if (update) {
             rttr.addFlashAttribute("alert", Map.of("code", "success", "message", "회원정보가 변경되었습니다."));
             rttr.addAttribute("id", data.getId());
+            return "redirect:/member/list";
         } else {
-            rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", "잘못 입력하셨습니다."));
+            rttr.addFlashAttribute("alert", Map.of("code", "warning", "message", "비밀번호를 다시 입력하세요."));
             rttr.addAttribute("id", data.getId());
+            return "redirect:/member/edit";
         }
-        return "redirect:/member/list";
     }
 
     @PostMapping("changePw")
