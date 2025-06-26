@@ -23,7 +23,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="writerInput" class="form-label">작성자</label>
-                    <input type="text" name="writer" id="writerInput" class="form-control">
+                    <input type="text" name="writer" id="writerInput" class="form-control"
+                           th:value="${session.loggedInUser.nickName}" readonly>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-outline-primary">저장</button>
