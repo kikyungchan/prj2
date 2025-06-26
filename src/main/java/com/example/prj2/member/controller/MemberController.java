@@ -125,14 +125,20 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public String login(String id, String password, HttpSession httpSession) {
+    public String login(String id, String password, HttpSession httpSession, RedirectAttributes rttr) {
 
         boolean login = memberService.login(id, password, httpSession);
 
         if (login) {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "success",
+                            "message", "로그인 되었습니다."));
             return "redirect:/board/list";
 
         } else {
+            rttr.addFlashAttribute("alert",
+                    Map.of("code", "danger",
+                            "message", "아이디/패스워드가 일치하지 않습니다."));
             return "redirect:/member/login";
         }
     }

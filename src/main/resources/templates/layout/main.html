@@ -43,25 +43,37 @@
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item" th:if="${session.loggedInUser == null}">
+                        <a class="nav-link" th:href="@{/member/login}"
+                           th:classappend="${current == 'login' ? 'active' : ''}">
+                            로그인
+                        </a>
+                    </li>
+                    <li class="nav-item" th:if="${session.loggedInUser != null}">
+                        <a class="nav-link" th:href="@{/member/logout}"
+                           th:classappend="${current == 'logout' ? 'active' : ''}">
+                            로그아웃
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/board/list}"
                            th:classappend="${current == 'list' ? 'active' : ''}">
                             목록
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${session.loggedInUser != null}">
                         <a class="nav-link" th:href="@{/board/write}"
                            th:classappend="${current == 'write' ? 'active' : ''}">
                             글쓰기
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${session.loggedInUser == null}">
                         <a class="nav-link" th:href="@{/member/signup}"
                            th:classappend="${current == 'signup' ? 'active' : ''}">
                             회원가입
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${session.loggedInUser != null}">
                         <a class="nav-link" th:href="@{/member/list}"
                            th:classappend="${current == 'memberlist' ? 'active' : ''}">
                             회원목록

@@ -104,7 +104,7 @@ public class MemberService {
 
     public boolean login(String id, String password, HttpSession httpSession) {
         Optional<Member> db = memberRepository.findById(id);
-        if (db.isEmpty()) {
+        if (db.isPresent()) {
             String dbPassword = db.get().getPassword();
             if (dbPassword.equals(password)) {
                 MemberDto dto = new MemberDto();
